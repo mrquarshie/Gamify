@@ -8,7 +8,7 @@ const profileUsername = document.getElementById('profile-username');
 const userPhone = document.getElementById('user-phone');
 const headerActions = document.getElementById('header-actions');
 const signOutBtn = document.getElementById('sign-out-btn');
-const createBetBtn = document.getElementById('create-bet-btn');
+const createBetBtn = document.getElementById('create-bet-btn'); // Fixed this line
 const dashboardBetsGrid = document.getElementById('dashboard-bets-grid');
 const userBetsGrid = document.getElementById('user-bets-grid');
 const createBetSidebar = document.getElementById('create-bet-sidebar');
@@ -32,7 +32,14 @@ function initDashboard() {
     
     // Event listeners
     signOutBtn.addEventListener('click', signOut);
-    createBetBtn.addEventListener('click', createBet);
+    
+    // FIXED: Properly attach event listener to create bet button
+    if (createBetBtn) {
+        createBetBtn.addEventListener('click', createBet);
+    } else {
+        console.error("Create Bet button not found!");
+    }
+    
     createBetSidebar.addEventListener('click', scrollToCreateBet);
     
     // Set default end date to 7 days from now

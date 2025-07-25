@@ -93,3 +93,10 @@ function placeBet(betId, option) {
 
 // Start the home page
 document.addEventListener('DOMContentLoaded', initHomePage);
+function reloadBets() {
+    const bets = getBets();
+    renderBets('home-bets-grid', bets);
+}
+
+// Make it accessible globally for the pageshow event
+window.reloadBets = reloadBets;
