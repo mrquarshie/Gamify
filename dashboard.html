@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamify - Betting Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <h1>Gamify</h1>
+            </div>
+            
+            <div id="header-actions">
+                <!-- Actions will be dynamically populated -->
+            </div>
+        </header>
+        
+        <div id="dashboard-page" class="page-container active">
+            <div class="dashboard-content">
+                <aside class="sidebar">
+                    <div class="user-card">
+                        <div class="user-avatar" id="profile-avatar">U</div>
+                        <div class="username" id="profile-username">Username</div>
+                        <div class="user-phone" id="user-phone">+256 700 123456</div>
+                        
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Bets</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">$865</div>
+                                <div class="stat-label">Won</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">78%</div>
+                                <div class="stat-label">Win Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <ul class="nav-links">
+                        <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="#"><i class="fas fa-fire"></i> Popular Bets</a></li>
+                        <li><a href="#"><i class="fas fa-futbol"></i> Football</a></li>
+                        <li><a href="#"><i class="fas fa-basketball-ball"></i> Basketball</a></li>
+                        <li><a href="#"><i class="fas fa-landmark"></i> Politics</a></li>
+                        <li><a href="#"><i class="fas fa-trophy"></i> My Bets</a></li>
+                        <li><a href="#" id="create-bet-sidebar"><i class="fas fa-plus-circle"></i> Create Bet</a></li>
+                        <li><a href="#"><i class="fas fa-history"></i> Bet History</a></li>
+                        <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                        <li><a href="#" id="sign-out-btn"><i class="fas fa-sign-out-alt"></i> Sign Out</a></li>
+                    </ul>
+                </aside>
+                
+                <main class="main-content">
+                    <section class="active-bets">
+                        <div class="section-header">
+                            <h2 class="section-title">Active Bets</h2>
+                            <div class="filters">
+                                <select class="form-control" style="width: auto;" id="category-filter">
+                                    <option value="all">All Categories</option>
+                                    <option value="football">Football</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="politics">Politics</option>
+                                    <option value="entertainment">Entertainment</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="bets-grid" id="dashboard-bets-grid">
+                            <!-- Bets will be populated dynamically -->
+                        </div>
+                    </section>
+                    
+                    <section class="create-bet-section">
+                        <div class="section-header">
+                            <h2 class="section-title">Create New Bet</h2>
+                        </div>
+                        
+                        <div class="create-bet-form">
+                            <div class="form-group form-full">
+                                <label for="bet-title">Bet Question</label>
+                                <input type="text" id="bet-title" class="form-control" placeholder="e.g. Will Trump win the 2024 election?">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="bet-category">Category</label>
+                                <select id="bet-category" class="form-control">
+                                    <option value="politics">Politics</option>
+                                    <option value="football">Football</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="world">World Events</option>
+                                    <option value="technology">Technology</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="end-date">End Date</label>
+                                <input type="date" id="end-date" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="option1">Option 1 (e.g. Yes)</label>
+                                <input type="text" id="option1" class="form-control" placeholder="Option name" value="Yes">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="option2">Option 2 (e.g. No)</label>
+                                <input type="text" id="option2" class="form-control" placeholder="Option name" value="No">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="min-bet">Minimum Bet</label>
+                                <input type="number" id="min-bet" class="form-control" value="5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="max-bet">Maximum Bet</label>
+                                <input type="number" id="max-bet" class="form-control" value="1000">
+                            </div>
+                            
+                            <div class="form-group form-full">
+                                <label for="bet-description">Description (Optional)</label>
+                                <textarea id="bet-description" class="form-control" rows="3" placeholder="Add details about your bet..."></textarea>
+                            </div>
+                            
+                            <button class="btn create-btn" id="create-bet-btn">
+                                <i class="fas fa-plus-circle"></i> Create Bet
+                            </button>
+                        </div>
+                    </section>
+                    
+                    <section class="your-bets">
+                        <div class="section-header">
+                            <h2 class="section-title">Your Active Bets</h2>
+                        </div>
+                        
+                        <div class="bets-grid" id="user-bets-grid">
+                            <!-- User's bets will be populated dynamically -->
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Gamify - Bet Responsibly. Must be 18+ to participate.</p>
+            <p>Gambling Problem? Call 1-800-GAMBLER</p>
+        </footer>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <h3><i class="fas fa-check-circle"></i> <span id="notification-title">Success!</span></h3>
+        <p id="notification-message">Operation completed successfully.</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <script src="shared.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

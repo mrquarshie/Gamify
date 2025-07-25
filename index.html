@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamify - Bet on Everything</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <h1>Gamify</h1>
+            </div>
+            
+            <div id="header-actions">
+                <!-- Actions will be dynamically populated -->
+            </div>
+        </header>
+        
+        <div id="home-page" class="page-container active">
+            <section class="hero">
+                <h2>Bet on What Matters</h2>
+                <p>Gamify lets you wager on real-world events. Predict outcomes, challenge friends, and win real money!</p>
+                <button class="btn" id="create-bet-btn">
+                    <i class="fas fa-bullhorn"></i> Create Your Own Bet
+                </button>
+            </section>
+            
+            <section class="categories">
+                <button class="category-btn active">All Bets</button>
+                <button class="category-btn"><i class="fas fa-football-ball"></i> Football</button>
+                <button class="category-btn"><i class="fas fa-basketball-ball"></i> Basketball</button>
+                <button class="category-btn"><i class="fas fa-landmark"></i> Politics</button>
+                <button class="category-btn"><i class="fas fa-film"></i> Entertainment</button>
+                <button class="category-btn"><i class="fas fa-globe-americas"></i> World Events</button>
+            </section>
+            
+            <section class="bets-grid" id="home-bets-grid">
+                <!-- Bets will be populated dynamically -->
+            </section>
+        </div>
+        
+        <footer>
+            <p>© 2023 Gamify - Bet Responsibly. Must be 18+ to participate.</p>
+            <p>Gambling Problem? Call 1-800-GAMBLER</p>
+        </footer>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <h3><i class="fas fa-check-circle"></i> <span id="notification-title">Success!</span></h3>
+        <p id="notification-message">Operation completed successfully.</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+
+    <script src="shared.js"></script>
+    <script src="home.js"></script>
+</body>
+</html>
