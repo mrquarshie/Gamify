@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamify - Bet on Everything</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: #ffcc00;
+        }
+        
+        .logo h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffcc00, #ff6b00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        nav a:hover, nav a.active {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .wallet {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #ffcc00, #ff6b00);
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #e0e0ff;
+        }
+        
+        .categories {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: rgba(255, 204, 0, 0.2);
+            border-color: #ffcc00;
+        }
+        
+        .bets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .bet-card {
+            background: rgba(30, 30, 60, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .bet-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 204, 0, 0.5);
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .card-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+            padding-right: 80px;
+        }
+        
+        .card-details {
+            display: flex;
+            justify-content: space-between;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .odds {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .odd-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .odd-option:hover {
+            background: rgba(255, 204, 0, 0.2);
+            transform: scale(1.03);
+        }
+        
+        .option-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffcc00;
+        }
+        
+        .option-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #a0a0c0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+        }
+        
+        .yes-fill {
+            background: linear-gradient(to right, #4CAF50, #8BC34A);
+            width: 45%;
+        }
+        
+        .no-fill {
+            background: linear-gradient(to right, #F44336, #FF9800);
+            width: 55%;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .participants {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #a0a0c0;
+        }
+        
+        .time-left {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff6b6b;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+            color: #a0a0c0;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .bets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <h1>Gamify</h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Popular</a></li>
+                    <li><a href="#">Politics</a></li>
+                    <li><a href="#">Sports</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">My Bets</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <div class="wallet">
+                    <i class="fas fa-wallet"></i>
+                    <span>$1,250.00</span>
+                </div>
+                <button class="btn"><i class="fas fa-plus"></i> Add Funds</button>
+            </div>
+        </header>
+        
+        <section class="hero">
+            <h2>Bet on What Matters</h2>
+            <p>Gamify lets you wager on real-world events. Predict outcomes, challenge friends, and win real money!</p>
+            <button class="btn"><i class="fas fa-bullhorn"></i> Create Your Own Bet</button>
+        </section>
+        
+        <section class="categories">
+            <button class="category-btn active">All Bets</button>
+            <button class="category-btn"><i class="fas fa-football-ball"></i> Football</button>
+            <button class="category-btn"><i class="fas fa-basketball-ball"></i> Basketball</button>
+            <button class="category-btn"><i class="fas fa-landmark"></i> Politics</button>
+            <button class="category-btn"><i class="fas fa-film"></i> Entertainment</button>
+            <button class="category-btn"><i class="fas fa-globe-americas"></i> World Events</button>
+        </section>
+        
+        <section class="bets-grid">
+            <!-- Bet Card 1: Politics -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Politics</div>
+                    <h3 class="card-title">Will Trump win the 2024 Presidential Election?</h3>
+                    <div class="card-details">
+                        <span>Created by: @EagleEye</span>
+                        <span>Total: $85,000</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(1, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">2.15x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(1, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">1.75x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $38,250</span>
+                            <span>NO: $46,750</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill"></div>
+                            <div class="progress-fill no-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>1,428 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 42 days left
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bet Card 2: Football -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Football</div>
+                    <h3 class="card-title">Will Real Madrid win the Champions League?</h3>
+                    <div class="card-details">
+                        <span>Created by: @FootballFanatic</span>
+                        <span>Total: $62,400</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(2, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">1.95x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(2, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">2.05x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $41,200</span>
+                            <span>NO: $21,200</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill" style="width: 66%"></div>
+                            <div class="progress-fill no-fill" style="width: 34%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>987 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 15 days left
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bet Card 3: Basketball -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Basketball</div>
+                    <h3 class="card-title">Will LeBron James win MVP this season?</h3>
+                    <div class="card-details">
+                        <span>Created by: @HoopDreams</span>
+                        <span>Total: $37,800</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(3, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">3.20x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(3, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">1.40x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $11,200</span>
+                            <span>NO: $26,600</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill" style="width: 30%"></div>
+                            <div class="progress-fill no-fill" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>732 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 87 days left
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bet Card 4: Politics -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Politics</div>
+                    <h3 class="card-title">Will the UK have a general election in 2024?</h3>
+                    <div class="card-details">
+                        <span>Created by: @PoliticalPundit</span>
+                        <span>Total: $28,900</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(4, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">1.65x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(4, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">2.25x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $18,200</span>
+                            <span>NO: $10,700</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill" style="width: 63%"></div>
+                            <div class="progress-fill no-fill" style="width: 37%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>514 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 120 days left
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bet Card 5: Football -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Football</div>
+                    <h3 class="card-title">Will Messi score 30+ goals this season?</h3>
+                    <div class="card-details">
+                        <span>Created by: @SoccerExpert</span>
+                        <span>Total: $45,600</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(5, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">2.50x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(5, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">1.55x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $18,500</span>
+                            <span>NO: $27,100</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill" style="width: 41%"></div>
+                            <div class="progress-fill no-fill" style="width: 59%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>821 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 65 days left
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bet Card 6: Basketball -->
+            <div class="bet-card">
+                <div class="card-header">
+                    <div class="card-category">Basketball</div>
+                    <h3 class="card-title">Will the Warriors make the playoffs this season?</h3>
+                    <div class="card-details">
+                        <span>Created by: @GoldenStateFan</span>
+                        <span>Total: $33,200</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="odds">
+                        <div class="odd-option" onclick="placeBet(6, 'yes')">
+                            <div class="option-title">YES</div>
+                            <div class="option-value">1.80x</div>
+                        </div>
+                        <div class="odd-option" onclick="placeBet(6, 'no')">
+                            <div class="option-title">NO</div>
+                            <div class="option-value">2.10x</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>YES: $19,800</span>
+                            <span>NO: $13,400</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill yes-fill" style="width: 60%"></div>
+                            <div class="progress-fill no-fill" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="participants">
+                        <i class="fas fa-users"></i>
+                        <span>602 participants</span>
+                    </div>
+                    <div class="time-left">
+                        <i class="fas fa-clock"></i> 53 days left
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2025 Gamify - Bet Responsibly. Must be 18+ to participate.</p>
+            <p>Gambling Problem? Call 1-800-GAMBLER</p>
+        </footer>
+    </div>
+
+    <script>
+        // Function to handle placing a bet
+        function placeBet(betId, option) {
+            const betAmount = prompt(`How much do you want to bet on ${option.toUpperCase()}? (Min: $5)`);
+            if (betAmount && parseFloat(betAmount) >= 5) {
+                alert(`Success! You've bet $${betAmount} on ${option.toUpperCase()} for bet #${betId}.`);
+            } else if (betAmount) {
+                alert('Minimum bet amount is $5. Please try again.');
+            }
+        }
+        
+        // Add interactivity to category buttons
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // In a real app, this would filter bets by category
+                // For this demo, we'll just show an alert
+                const category = this.textContent.trim();
+                alert(`Filtering bets for: ${category}`);
+            });
+        });
+        
+        // Add animation to bet cards on hover
+        document.querySelectorAll('.bet-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+                this.style.borderColor = 'rgba(255, 204, 0, 0.5)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            });
+        });
+    </script>
+</body>
+</html>
