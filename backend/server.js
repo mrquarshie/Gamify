@@ -1,16 +1,33 @@
 const express = require('express');
-const app = express();
-const PORT = 3001; // or any port you prefer
+const cors = require('cors');
+const connectDB = require('./config/database');
+require('dotenv').config();
 
-// Middleware to parse JSON requests
+const app = express();
+const port = process.env.PORT;
+
+// Connect to MongoDB
+connectDB();
+
+const corsOptions = {
+  origin: ['*'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE',],
+  allowedHeaders: ['Content-Type']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
-// Serve static files from your frontend (if needed)
-app.use(express.static('../frontend/dist')); // Adjust path to your frontend build
 
-// Example API route
-app.get('/api/data', (req, res) => {
-  res.json({ message: 'Hello from Node.js backend!' });
+app.get('/', (req, res) => {
+  res.json('Are you Authorized to be here?')
+});
+
+app.use('*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found'
+  });
 });
 
 // Start the server
